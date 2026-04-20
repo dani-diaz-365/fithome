@@ -39,6 +39,7 @@ function Registro() {
       <div className="auth-card">
 
         <div className="auth-logo">
+          <Link to="/" className="btn-volver">← Volver al inicio</Link>
           <span className="fit">FIT</span><span className="home">HOME</span>
         </div>
 
@@ -54,7 +55,7 @@ function Registro() {
               type="text"
               id="nombre"
               name="nombre"
-              placeholder="Daniel Díaz"
+              placeholder="Nombre Apellidos"
               value={form.nombre}
               onChange={handleChange}
             />

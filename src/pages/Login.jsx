@@ -26,6 +26,7 @@ function Login() {
       <div className="auth-card">
 
         <div className="auth-logo">
+          <Link to="/" className="btn-volver">← Volver al inicio</Link>
           <span className="fit">FIT</span><span className="home">HOME</span>
         </div>
 
