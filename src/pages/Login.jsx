@@ -10,16 +10,37 @@ function Login() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!form.email || !form.password) {
-      setError('Por favor, rellena todos los campos.');
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+  if (!form.email || !form.password) {
+    setError('Por favor, rellena todos los campos.');
+    return;
+  }
+
+  try {
+    const res = await fetch('http://localhost:8000/controllers/login.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email:    form.email,
+        password: form.password,
+      }),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      setError(data.error || 'Email o contraseña incorrectos.');
       return;
     }
-    setError('');
-    // Aquí irá la llamada al backend PHP
-    console.log('Login:', form);
-  };
+
+    localStorage.setItem('usuario', JSON.stringify(data));
+    window.location.href = '/dashboard';
+
+  } catch (err) {
+    setError('No se pudo conectar con el servidor.');
+  }
+};
 
   return (
     <div className="auth-page">

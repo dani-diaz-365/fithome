@@ -15,25 +15,47 @@ function Registro() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!form.nombre || !form.email || !form.password || !form.confirmar) {
-      setError('Por favor, rellena todos los campos.');
-      return;
-    }
-    if (form.password !== form.confirmar) {
-      setError('Las contraseñas no coinciden.');
-      return;
-    }
-    if (form.password.length < 6) {
-      setError('La contraseña debe tener al menos 6 caracteres.');
-      return;
-    }
-    setError('');
-    // Aquí irá la llamada al backend PHP
-    console.log('Registro:', form);
-  };
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+  if (!form.nombre || !form.email || !form.password || !form.confirmar) {
+    setError('Por favor, rellena todos los campos.');
+    return;
+  }
+  if (form.password !== form.confirmar) {
+    setError('Las contraseñas no coinciden.');
+    return;
+  }
+  if (form.password.length < 6) {
+    setError('La contraseña debe tener al menos 6 caracteres.');
+    return;
+  }
 
+  try {
+    const res = await fetch('http://localhost:8000/controllers/registro.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        nombre:   form.nombre,
+        email:    form.email,
+        password: form.password,
+      }),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      setError(data.error || 'Error al registrarse.');
+      return;
+    }
+
+    // Guardar usuario en localStorage y redirigir al dashboard
+    localStorage.setItem('usuario', JSON.stringify(data));
+    window.location.href = '/dashboard';
+
+  } catch (err) {
+    setError('No se pudo conectar con el servidor.');
+  }
+};
   return (
     <div className="auth-page">
       <div className="auth-card">

@@ -29,8 +29,8 @@ function Dashboard() {
   const [activo, setActivo] = useState('inicio');
   const [sidebarAbierto, setSidebarAbierto] = useState(true);
 
-  // Usuario simulado (luego vendrá del backend)
-  const usuario = { nombre: 'Daniel', plan: 'Premium' };
+  const usuarioGuardado = JSON.parse(localStorage.getItem('usuario'));
+  const usuario = usuarioGuardado || { nombre: 'Usuario', plan: 'gratuito' };
 
   return (
     <div className="dashboard-layout">
@@ -72,7 +72,11 @@ function Dashboard() {
         </nav>
 
         <div className="sidebar-footer">
-          <Link to="/" className="sidebar-item cerrar-sesion">
+          <Link
+            to="/"
+            className="sidebar-item cerrar-sesion"
+            onClick={() => localStorage.removeItem('usuario')}
+          >
             <span className="sidebar-icono">🚪</span>
             {sidebarAbierto && <span className="sidebar-label">Cerrar sesión</span>}
           </Link>
