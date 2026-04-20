@@ -1,0 +1,39 @@
+.footer {
+  background: var(--azul);
+  color: var(--blanco);
+  padding: 3rem 4rem 2rem;
+  text-align: center;
+}
+
+.footer-logo {
+  font-size: 1.8rem;
+  font-weight: 900;
+  margin-bottom: 0.5rem;
+}
+
+.footer-logo p {
+  font-size: 0.9rem;
+  opacity: 0.6;
+  margin-top: 0.3rem;
+}
+
+.footer-links {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin: 1.5rem 0;
+}
+
+.footer-links a {
+  color: #aac;
+  font-size: 0.95rem;
+  transition: color 0.2s;
+}
+
+.footer-links a:hover { color: var(--naranja); }
+
+.footer-copy {
+  font-size: 0.8rem;
+  opacity: 0.4;
+  margin-top: 1rem;
+}

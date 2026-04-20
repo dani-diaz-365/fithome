@@ -1,0 +1,77 @@
+.precios {
+  padding: 5rem 4rem;
+  text-align: center;
+  background: var(--blanco);
+}
+
+.precios h2 { font-size: 2.2rem; margin-bottom: 0.8rem; }
+.precios-subtitulo { color: var(--gris-texto); margin-bottom: 3rem; }
+
+.precios-grid {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.precio-card {
+  background: var(--gris-claro);
+  border-radius: 14px;
+  padding: 2.5rem 2rem;
+  width: 300px;
+  position: relative;
+  transition: transform 0.2s;
+}
+
+.precio-card:hover { transform: translateY(-4px); }
+
+.precio-card.destacado {
+  background: var(--azul);
+  color: var(--blanco);
+}
+
+.badge {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--naranja);
+  color: white;
+  padding: 0.3rem 1rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.precio-card h3 { font-size: 1.3rem; margin-bottom: 1rem; }
+
+.precio-valor { margin-bottom: 1.5rem; }
+.precio-numero { font-size: 2.5rem; font-weight: 900; }
+.precio-periodo { font-size: 0.9rem; opacity: 0.7; }
+
+.precio-card ul {
+  list-style: none;
+  margin-bottom: 2rem;
+  text-align: left;
+}
+
+.precio-card ul li {
+  padding: 0.4rem 0;
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
+
+.btn-outline-azul {
+  display: inline-block;
+  border: 2px solid var(--azul);
+  color: var(--azul);
+  padding: 0.7rem 1.8rem;
+  border-radius: 6px;
+  font-weight: 700;
+  transition: all 0.2s;
+}
+
+.btn-outline-azul:hover {
+  background: var(--azul);
+  color: var(--blanco);
+}
