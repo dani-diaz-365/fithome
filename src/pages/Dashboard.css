@@ -26,26 +26,42 @@
   justify-content: space-between;
   padding: 1.5rem 1rem;
   border-bottom: 1px solid rgba(255,255,255,0.1);
+  min-height: 64px;
 }
 
 .sidebar-logo {
   font-size: 1.3rem;
   font-weight: 900;
   white-space: nowrap;
-}
-
-.sidebar-toggle {
-  background: none;
-  border: none;
-  color: var(--blanco);
-  cursor: pointer;
-  font-size: 0.8rem;
-  opacity: 0.6;
+  overflow: hidden;
   transition: opacity 0.2s;
 }
 
-.sidebar-toggle:hover { opacity: 1; }
+.sidebar.cerrado .sidebar-logo {
+  opacity: 0;
+  width: 0;
+}
 
+.sidebar-toggle {
+  background: rgba(255,255,255,0.15);
+  border: none;
+  color: var(--blanco);
+  cursor: pointer;
+  font-size: 0.85rem;
+  border-radius: 6px;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  min-width: 30px;
+  margin-left: auto;
+}
+
+.sidebar-toggle:hover {
+  background: rgba(255,255,255,0.3);
+}
 .sidebar-perfil {
   display: flex;
   align-items: center;
