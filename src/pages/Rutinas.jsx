@@ -1,8 +1,6 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import './Rutinas.css';
 import Sidebar from '../components/Sidebar';
-
+import './Rutinas.css';
 
 const rutinas = [
   {
@@ -87,13 +85,71 @@ const rutinas = [
 
 const niveles = ['Todos', 'Principiante', 'Intermedio', 'Avanzado'];
 const grupos  = ['Todos', 'Pecho', 'Piernas', 'Abdomen', 'Espalda', 'Hombros', 'Full Body'];
+const colorNivel = { Principiante: '#27ae60', Intermedio: '#f47c20', Avanzado: '#c0392b' };
+
+function Modal({ rutina, completados, onToggle, onCerrar }) {
+  const total = rutina.ejercicios.length;
+  const hechos = rutina.ejercicios.filter((_, i) => completados[`${rutina.id}-${i}`]).length;
+  const porcentaje = Math.round((hechos / total) * 100);
+
+  return (
+    <div className="modal-overlay" onClick={onCerrar}>
+      <div className="modal-caja" onClick={(e) => e.stopPropagation()}>
+
+        <button className="modal-cerrar" onClick={onCerrar}>✕</button>
+
+        <div className="modal-cabecera">
+          <h2>{rutina.titulo}</h2>
+          <div className="rutina-meta">
+            <span className="badge-nivel" style={{ background: colorNivel[rutina.nivel] }}>
+              {rutina.nivel}
+            </span>
+            <span className="rutina-grupo">💪 {rutina.grupo}</span>
+            <span className="rutina-duracion">⏱️ {rutina.duracion}</span>
+          </div>
+        </div>
+
+        <div className="modal-progreso">
+          <div className="progreso-barra">
+            <div className="progreso-relleno" style={{ width: `${porcentaje}%` }} />
+          </div>
+          <span className="progreso-texto">{hechos}/{total} ejercicios completados</span>
+        </div>
+
+        <ul className="ejercicios-lista">
+          {rutina.ejercicios.map((ej, i) => {
+            const hecho = completados[`${rutina.id}-${i}`];
+            return (
+              <li
+                key={i}
+                className={`ejercicio-item ${hecho ? 'hecho' : ''}`}
+                onClick={() => onToggle(rutina.id, i)}
+              >
+                <span className="ejercicio-check">{hecho ? '✅' : '⬜'}</span>
+                <span className="ejercicio-nombre">{ej.nombre}</span>
+                <span className="ejercicio-detalle">{ej.series} × {ej.reps}</span>
+              </li>
+            );
+          })}
+        </ul>
+
+        {porcentaje === 100 && (
+          <div className="modal-completado">
+            🎉 ¡Rutina completada! ¡Buen trabajo!
+          </div>
+        )}
+
+      </div>
+    </div>
+  );
+}
 
 function Rutinas() {
   const [sidebarAbierto, setSidebarAbierto] = useState(true);
-  const [nivelActivo, setNivelActivo]   = useState('Todos');
-  const [grupoActivo, setGrupoActivo]   = useState('Todos');
-  const [rutinaAbierta, setRutinaAbierta] = useState(null);
-  const [completados, setCompletados]   = useState({});
+  const [nivelActivo, setNivelActivo]       = useState('Todos');
+  const [grupoActivo, setGrupoActivo]       = useState('Todos');
+  const [rutinaModal, setRutinaModal]       = useState(null);
+  const [completados, setCompletados]       = useState({});
 
   const rutinasFiltradas = rutinas.filter((r) => {
     const okNivel = nivelActivo === 'Todos' || r.nivel === nivelActivo;
@@ -109,15 +165,10 @@ function Rutinas() {
   const ejerciciosCompletados = (rutina) =>
     rutina.ejercicios.filter((_, i) => completados[`${rutina.id}-${i}`]).length;
 
-  const colorNivel = { Principiante: '#27ae60', Intermedio: '#f47c20', Avanzado: '#c0392b' };
-
   return (
     <div className="rutinas-layout">
-
-      {/* Sidebar */}
       <Sidebar abierto={sidebarAbierto} setAbierto={setSidebarAbierto} />
 
-      {/* Contenido */}
       <main className="rutinas-main">
         <h1 className="rutinas-titulo">Rutinas de entrenamiento</h1>
         <p className="rutinas-subtitulo">Filtra por nivel o grupo muscular y empieza cuando quieras.</p>
@@ -156,74 +207,54 @@ function Rutinas() {
             <p className="sin-resultados">No hay rutinas con estos filtros.</p>
           )}
           {rutinasFiltradas.map((rutina) => {
-            const completadasCount = ejerciciosCompletados(rutina);
-            const total            = rutina.ejercicios.length;
-            const porcentaje       = Math.round((completadasCount / total) * 100);
-            const abierta          = rutinaAbierta === rutina.id;
+            const hechos     = ejerciciosCompletados(rutina);
+            const total      = rutina.ejercicios.length;
+            const porcentaje = Math.round((hechos / total) * 100);
 
             return (
               <div className="rutina-card" key={rutina.id}>
-                {/* Cabecera */}
                 <div className="rutina-cabecera">
-                  <div>
-                    <h3 className="rutina-nombre">{rutina.titulo}</h3>
-                    <div className="rutina-meta">
-                      <span
-                        className="badge-nivel"
-                        style={{ background: colorNivel[rutina.nivel] }}
-                      >
-                        {rutina.nivel}
-                      </span>
-                      <span className="rutina-grupo">💪 {rutina.grupo}</span>
-                      <span className="rutina-duracion">⏱️ {rutina.duracion}</span>
-                    </div>
+                  <h3 className="rutina-nombre">{rutina.titulo}</h3>
+                  <div className="rutina-meta">
+                    <span
+                      className="badge-nivel"
+                      style={{ background: colorNivel[rutina.nivel] }}
+                    >
+                      {rutina.nivel}
+                    </span>
+                    <span className="rutina-grupo">💪 {rutina.grupo}</span>
+                    <span className="rutina-duracion">⏱️ {rutina.duracion}</span>
                   </div>
                 </div>
 
-                {/* Barra de progreso */}
                 <div className="progreso-barra-wrap">
                   <div className="progreso-barra">
-                    <div
-                      className="progreso-relleno"
-                      style={{ width: `${porcentaje}%` }}
-                    />
+                    <div className="progreso-relleno" style={{ width: `${porcentaje}%` }} />
                   </div>
-                  <span className="progreso-texto">{completadasCount}/{total} ejercicios</span>
+                  <span className="progreso-texto">{hechos}/{total}</span>
                 </div>
 
-                {/* Botón expandir */}
                 <button
-                  className="btn-expandir"
-                  onClick={() => setRutinaAbierta(abierta ? null : rutina.id)}
+                  className="btn-ver-rutina"
+                  onClick={() => setRutinaModal(rutina)}
                 >
-                  {abierta ? 'Ocultar ejercicios ▲' : 'Ver ejercicios ▼'}
+                  Ver rutina →
                 </button>
-
-                {/* Lista de ejercicios */}
-                {abierta && (
-                  <ul className="ejercicios-lista">
-                    {rutina.ejercicios.map((ej, i) => {
-                      const key  = `${rutina.id}-${i}`;
-                      const hecho = completados[key];
-                      return (
-                        <li
-                          key={i}
-                          className={`ejercicio-item ${hecho ? 'hecho' : ''}`}
-                          onClick={() => toggleEjercicio(rutina.id, i)}
-                        >
-                          <span className="ejercicio-check">{hecho ? '✅' : '⬜'}</span>
-                          <span className="ejercicio-nombre">{ej.nombre}</span>
-                          <span className="ejercicio-detalle">{ej.series} × {ej.reps}</span>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                )}
               </div>
             );
           })}
         </div>
       </main>
+
+      {/* Modal */}
+      {rutinaModal && (
+        <Modal
+          rutina={rutinaModal}
+          completados={completados}
+          onToggle={toggleEjercicio}
+          onCerrar={() => setRutinaModal(null)}
+        />
+      )}
     </div>
   );
 }
