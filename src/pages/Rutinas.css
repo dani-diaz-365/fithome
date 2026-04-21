@@ -1,0 +1,227 @@
+.rutinas-layout {
+  display: flex;
+  min-height: 100vh;
+  background: #f0f2f5;
+}
+
+/* Sidebar — reutiliza variables del Dashboard */
+.rutinas-sidebar {
+  width: 220px;
+  min-width: 220px;
+  background: var(--azul);
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+}
+
+.rutinas-sidebar .sidebar-logo {
+  font-size: 1.4rem;
+  font-weight: 900;
+  padding: 0 1.2rem 1.5rem;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.rutinas-sidebar .sidebar-nav {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 1rem 0.5rem;
+}
+
+.rutinas-sidebar .cerrar-sesion {
+  margin: 0 0.5rem 1rem;
+}
+
+/* Contenido principal */
+.rutinas-main {
+  flex: 1;
+  padding: 2rem 2.5rem;
+  overflow-y: auto;
+}
+
+.rutinas-titulo {
+  font-size: 1.8rem;
+  color: var(--azul);
+  margin-bottom: 0.4rem;
+}
+
+.rutinas-subtitulo {
+  color: var(--gris-texto);
+  margin-bottom: 2rem;
+}
+
+/* Filtros */
+.filtros {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  margin-bottom: 2rem;
+}
+
+.filtro-grupo {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.filtro-etiqueta {
+  font-weight: 700;
+  color: var(--azul);
+  font-size: 0.9rem;
+  min-width: 70px;
+}
+
+.filtro-btn {
+  background: var(--blanco);
+  border: 1.5px solid #dde;
+  border-radius: 20px;
+  padding: 0.35rem 1rem;
+  font-size: 0.85rem;
+  cursor: pointer;
+  font-family: var(--fuente);
+  color: var(--gris-texto);
+  transition: all 0.2s;
+}
+
+.filtro-btn:hover { border-color: var(--naranja); color: var(--naranja); }
+.filtro-btn.activo { background: var(--naranja); border-color: var(--naranja); color: white; font-weight: 700; }
+
+/* Grid */
+.rutinas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+.sin-resultados {
+  color: var(--gris-texto);
+  grid-column: 1 / -1;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+/* Tarjeta rutina */
+.rutina-card {
+  background: var(--blanco);
+  border-radius: 14px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.rutina-nombre {
+  font-size: 1.05rem;
+  color: var(--azul);
+  margin-bottom: 0.5rem;
+}
+
+.rutina-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+}
+
+.badge-nivel {
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.2rem 0.6rem;
+  border-radius: 10px;
+}
+
+.rutina-grupo,
+.rutina-duracion {
+  font-size: 0.82rem;
+  color: var(--gris-texto);
+}
+
+/* Barra progreso */
+.progreso-barra-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.progreso-barra {
+  flex: 1;
+  height: 8px;
+  background: #eee;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.progreso-relleno {
+  height: 100%;
+  background: var(--naranja);
+  border-radius: 10px;
+  transition: width 0.3s ease;
+}
+
+.progreso-texto {
+  font-size: 0.8rem;
+  color: var(--gris-texto);
+  white-space: nowrap;
+}
+
+/* Botón expandir */
+.btn-expandir {
+  background: none;
+  border: 1.5px solid #dde;
+  border-radius: 8px;
+  padding: 0.5rem;
+  font-size: 0.85rem;
+  cursor: pointer;
+  color: var(--azul);
+  font-family: var(--fuente);
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.btn-expandir:hover { border-color: var(--naranja); color: var(--naranja); }
+
+/* Lista ejercicios */
+.ejercicios-lista {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.ejercicio-item {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.6rem 0.8rem;
+  background: var(--gris-claro);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+  font-size: 0.9rem;
+}
+
+.ejercicio-item:hover { background: #e8e8f0; }
+
+.ejercicio-item.hecho {
+  background: #eafaf1;
+  text-decoration: line-through;
+  opacity: 0.7;
+}
+
+.ejercicio-check { font-size: 1rem; }
+.ejercicio-nombre { flex: 1; color: var(--azul); font-weight: 500; }
+.ejercicio-detalle { font-size: 0.8rem; color: var(--gris-texto); }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .rutinas-sidebar { display: none; }
+  .rutinas-main { padding: 1.2rem; }
+  .rutinas-grid { grid-template-columns: 1fr; }
+}
