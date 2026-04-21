@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Rutinas.css';
+import Sidebar from '../components/Sidebar';
+
 
 const rutinas = [
   {
@@ -87,6 +89,7 @@ const niveles = ['Todos', 'Principiante', 'Intermedio', 'Avanzado'];
 const grupos  = ['Todos', 'Pecho', 'Piernas', 'Abdomen', 'Espalda', 'Hombros', 'Full Body'];
 
 function Rutinas() {
+  const [sidebarAbierto, setSidebarAbierto] = useState(true);
   const [nivelActivo, setNivelActivo]   = useState('Todos');
   const [grupoActivo, setGrupoActivo]   = useState('Todos');
   const [rutinaAbierta, setRutinaAbierta] = useState(null);
@@ -112,38 +115,7 @@ function Rutinas() {
     <div className="rutinas-layout">
 
       {/* Sidebar */}
-      <aside className="rutinas-sidebar">
-        <div className="sidebar-logo">
-          <span className="fit">FIT</span><span className="home">HOME</span>
-        </div>
-        <nav className="sidebar-nav">
-          {[
-            { icono: '🏠', label: 'Inicio',        path: '/dashboard' },
-            { icono: '🏋️', label: 'Rutinas',       path: '/rutinas' },
-            { icono: '🥗', label: 'Dietas',         path: '/dietas' },
-            { icono: '👨‍🏫', label: 'Entrenadores', path: '/entrenadores' },
-            { icono: '🛒', label: 'Tienda',         path: '/tienda' },
-            { icono: '📈', label: 'Progreso',       path: '/progreso' },
-          ].map((item) => (
-            <Link
-              key={item.path}
-              to={item.path}
-              className={`sidebar-item ${item.path === '/rutinas' ? 'activo' : ''}`}
-            >
-              <span className="sidebar-icono">{item.icono}</span>
-              <span className="sidebar-label">{item.label}</span>
-            </Link>
-          ))}
-        </nav>
-        <Link
-          to="/"
-          className="sidebar-item cerrar-sesion"
-          onClick={() => localStorage.removeItem('usuario')}
-        >
-          <span className="sidebar-icono">🚪</span>
-          <span className="sidebar-label">Cerrar sesión</span>
-        </Link>
-      </aside>
+      <Sidebar abierto={sidebarAbierto} setAbierto={setSidebarAbierto} />
 
       {/* Contenido */}
       <main className="rutinas-main">

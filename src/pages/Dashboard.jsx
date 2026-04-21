@@ -1,14 +1,15 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+import Sidebar from '../components/Sidebar';
 import './Dashboard.css';
 
 const menuItems = [
-  { icono: '🏠', label: 'Inicio', id: 'inicio' },
-  { icono: '🏋️', label: 'Rutinas', id: 'rutinas' },
-  { icono: '🥗', label: 'Dietas', id: 'dietas' },
-  { icono: '👨‍🏫', label: 'Entrenadores', id: 'entrenadores' },
-  { icono: '🛒', label: 'Tienda', id: 'tienda' },
-  { icono: '📈', label: 'Progreso', id: 'progreso' },
+  { icono: '🏠', label: 'Inicio', id: 'inicio', path: '/dashboard' },
+  { icono: '🏋️', label: 'Rutinas', id: 'rutinas', path: '/rutinas' },
+  { icono: '🥗', label: 'Dietas', id: 'dietas', path: '/dietas' },
+  { icono: '👨‍🏫', label: 'Entrenadores', id: 'entrenadores', path: '/entrenadores' },
+  { icono: '🛒', label: 'Tienda', id: 'tienda', path: '/tienda' },
+  { icono: '📈', label: 'Progreso', id: 'progreso', path: '/progreso' },
 ];
 
 const stats = [
@@ -26,7 +27,7 @@ const accesoRapido = [
 ];
 
 function Dashboard() {
-  const [activo, setActivo] = useState('inicio');
+  const location = useLocation();
   const [sidebarAbierto, setSidebarAbierto] = useState(true);
 
   const usuarioGuardado = JSON.parse(localStorage.getItem('usuario'));
@@ -36,52 +37,7 @@ function Dashboard() {
     <div className="dashboard-layout">
 
       {/* Sidebar */}
-      <aside className={`sidebar ${sidebarAbierto ? 'abierto' : 'cerrado'}`}>
-        <div className="sidebar-header">
-          <div className="sidebar-logo">
-            <span className="fit">FIT</span><span className="home">HOME</span>
-          </div>
-          <button className="sidebar-toggle" onClick={() => setSidebarAbierto(!sidebarAbierto)}>
-            {sidebarAbierto ? '◀' : '▶'}
-          </button>
-        </div>
-
-        <div className="sidebar-perfil">
-          <div className="avatar">
-            {usuario.nombre.charAt(0)}
-          </div>
-          {sidebarAbierto && (
-            <div>
-              <p className="perfil-nombre">{usuario.nombre}</p>
-              <span className="perfil-plan">{usuario.plan}</span>
-            </div>
-          )}
-        </div>
-
-        <nav className="sidebar-nav">
-          {menuItems.map((item) => (
-            <button
-              key={item.id}
-              className={`sidebar-item ${activo === item.id ? 'activo' : ''}`}
-              onClick={() => setActivo(item.id)}
-            >
-              <span className="sidebar-icono">{item.icono}</span>
-              {sidebarAbierto && <span className="sidebar-label">{item.label}</span>}
-            </button>
-          ))}
-        </nav>
-
-        <div className="sidebar-footer">
-          <Link
-            to="/"
-            className="sidebar-item cerrar-sesion"
-            onClick={() => localStorage.removeItem('usuario')}
-          >
-            <span className="sidebar-icono">🚪</span>
-            {sidebarAbierto && <span className="sidebar-label">Cerrar sesión</span>}
-          </Link>
-        </div>
-      </aside>
+      <Sidebar abierto={sidebarAbierto} setAbierto={setSidebarAbierto} />
 
       {/* Contenido principal */}
       <main className="dashboard-main">
