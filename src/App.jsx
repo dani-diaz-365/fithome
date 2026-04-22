@@ -9,6 +9,7 @@ import Registro from './pages/Registro';
 import Dashboard from './pages/Dashboard';
 import Rutinas from './pages/Rutinas';
 import Dietas from './pages/Dietas';
+import Entrenadores from './pages/Entrenadores';
 import './index.css';
 
 function LandingPage() {
@@ -33,6 +34,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/rutinas" element={<Rutinas />} />
         <Route path="/dietas" element={<Dietas />} />
+        <Route path="/entrenadores" element={<Entrenadores />} /> 
       </Routes>
     </BrowserRouter>
   );
