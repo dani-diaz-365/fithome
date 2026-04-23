@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Servicios from './components/Servicios';
@@ -27,6 +28,10 @@ function LandingPage() {
 }
 
 function App() {
+  useEffect(() => {
+    const oscuro = localStorage.getItem('oscuro') === 'true';
+    document.body.classList.toggle('oscuro', oscuro);
+  }, []);
   return (
     <BrowserRouter>
       <Routes>

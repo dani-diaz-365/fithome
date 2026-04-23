@@ -6,8 +6,8 @@ const menuItems = [
   { icono: '🏋️', label: 'Rutinas',       path: '/rutinas' },
   { icono: '🥗', label: 'Dietas',        path: '/dietas' },
   { icono: '👨‍🏫', label: 'Entrenadores', path: '/entrenadores' },
-  { icono: '🛒', label: 'Tienda',        path: '/tienda' },
   { icono: '📈', label: 'Progreso',      path: '/progreso' },
+  { icono: '🛒', label: 'Tienda',        path: '/tienda' },
 ];
 
 function Sidebar({ abierto, setAbierto }) {

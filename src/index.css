@@ -22,3 +22,46 @@ a {
   text-decoration: none;
   color: inherit;
 }
+
+body.oscuro {
+  --azul:       #4a9edd;
+  --naranja:    #f47c20;
+  --blanco:     #1e1e2e;
+  --gris-claro: #2a2a3e;
+  --gris-texto: #aab;
+  background:   #151522;
+  color:        #eee;
+}
+
+body.oscuro .navbar,
+body.oscuro .sidebar { background: #12121e; }
+
+body.oscuro .stat-card,
+body.oscuro .acceso-card,
+body.oscuro .rutina-card,
+body.oscuro .precio-card,
+body.oscuro .servicio-card,
+body.oscuro .producto-card,
+body.oscuro .entrenador-card,
+body.oscuro .comida-card,
+body.oscuro .resumen-card,
+body.oscuro .graficas-seccion,
+body.oscuro .historial-seccion,
+body.oscuro .modal-caja,
+body.oscuro .auth-card { background: #1e1e2e; color: #eee; }
+
+body.oscuro .dashboard-main,
+body.oscuro .rutinas-main,
+body.oscuro .dietas-main,
+body.oscuro .entrenadores-main,
+body.oscuro .tienda-main,
+body.oscuro .progreso-main { background: #151522; }
+
+body.oscuro .topbar-btn { background: #1e1e2e; color: #eee; }
+
+body.oscuro .ejercicio-item,
+body.oscuro .historial-item,
+body.oscuro .carrito-item { background: #2a2a3e; }
+
+body.oscuro input,
+body.oscuro select { background: #2a2a3e; color: #eee; border-color: #444; }
