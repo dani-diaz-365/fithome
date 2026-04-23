@@ -13,14 +13,14 @@ const menuItems = [
 ];
 
 const stats = [
-  { icono: '🔥', valor: '12', label: 'Entrenamientos este mes' },
-  { icono: '⏱️', valor: '8h 30m', label: 'Tiempo total entrenado' },
-  { icono: '📅', valor: '5', label: 'Días seguidos activo' },
-  { icono: '⚡', valor: '3.200', label: 'Calorías quemadas' },
+  { icono: '🔥', valor: '18', label: 'Entrenamientos este mes' },
+  { icono: '⏱️', valor: '12h 40m', label: 'Tiempo total entrenado' },
+  { icono: '📅', valor: '10', label: 'Días seguidos activo' },
+  { icono: '⚡', valor: '8.640', label: 'Calorías quemadas' },
 ];
 
 const accesoRapido = [
-  { icono: '🏋️', titulo: 'Rutina de hoy', desc: 'Tren superior · 45 min', link: '/rutinas', color: '#1a3a5c' },
+  { icono: '🏋️', titulo: 'Rutina de hoy', desc: 'Tren superior básico · 30 min', link: '/rutinas', color: '#1a3a5c' },
   { icono: '🥗', titulo: 'Plan de dieta', desc: 'Ver menú del día', link: '/dietas', color: '#f47c20' },
   { icono: '👨‍🏫', titulo: 'Mi entrenador', desc: 'Carlos López · Online', link: '/entrenadores', color: '#27ae60' },
   { icono: '🛒', titulo: 'Tienda', desc: 'Novedades disponibles', link: '/tienda', color: '#8e44ad' },

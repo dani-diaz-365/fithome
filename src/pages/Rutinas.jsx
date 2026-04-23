@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Sidebar from '../components/Sidebar';
 import './Rutinas.css';
+import { useEntrenamientos } from '../context/EntrenamientosContext';
 
 const rutinas = [
   {
@@ -87,7 +88,7 @@ const niveles = ['Todos', 'Principiante', 'Intermedio', 'Avanzado'];
 const grupos  = ['Todos', 'Pecho', 'Piernas', 'Abdomen', 'Espalda', 'Hombros', 'Full Body'];
 const colorNivel = { Principiante: '#27ae60', Intermedio: '#f47c20', Avanzado: '#c0392b' };
 
-function Modal({ rutina, completados, onToggle, onCerrar }) {
+function Modal({ rutina, completados, onToggle, onCerrar, onCompletar }) {  
   const total = rutina.ejercicios.length;
   const hechos = rutina.ejercicios.filter((_, i) => completados[`${rutina.id}-${i}`]).length;
   const porcentaje = Math.round((hechos / total) * 100);
@@ -136,6 +137,9 @@ function Modal({ rutina, completados, onToggle, onCerrar }) {
         {porcentaje === 100 && (
           <div className="modal-completado">
             🎉 ¡Rutina completada! ¡Buen trabajo!
+            <button className="btn-guardar-progreso" onClick={onCompletar}>
+              Guardar en mi progreso →
+            </button>
           </div>
         )}
 
@@ -145,6 +149,7 @@ function Modal({ rutina, completados, onToggle, onCerrar }) {
 }
 
 function Rutinas() {
+  const { añadirEntrenamiento } = useEntrenamientos();
   const [sidebarAbierto, setSidebarAbierto] = useState(true);
   const [nivelActivo, setNivelActivo]       = useState('Todos');
   const [grupoActivo, setGrupoActivo]       = useState('Todos');
@@ -253,6 +258,10 @@ function Rutinas() {
           completados={completados}
           onToggle={toggleEjercicio}
           onCerrar={() => setRutinaModal(null)}
+          onCompletar={() => {
+            añadirEntrenamiento(rutinaModal);
+            setRutinaModal(null);
+          }}
         />
       )}
     </div>

@@ -1,0 +1,178 @@
+.progreso-layout {
+  display: flex;
+  min-height: 100vh;
+  background: #f0f2f5;
+}
+
+.progreso-main {
+  flex: 1;
+  padding: 2rem 2.5rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.progreso-titulo    { font-size: 1.8rem; color: var(--azul); margin-bottom: 0.2rem; }
+.progreso-subtitulo { color: var(--gris-texto); }
+
+/* Resumen */
+.progreso-resumen {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.2rem;
+}
+
+.resumen-card {
+  background: var(--blanco);
+  border-radius: 12px;
+  padding: 1.4rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+.resumen-icono  { font-size: 2rem; }
+.resumen-valor  { font-size: 1.4rem; font-weight: 800; color: var(--azul); }
+.resumen-label  { font-size: 0.78rem; color: var(--gris-texto); margin-top: 0.2rem; }
+
+/* Gráficas */
+.graficas-seccion {
+  background: var(--blanco);
+  border-radius: 14px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+.graficas-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+.graficas-tabs {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.grafica-tab {
+  padding: 0.4rem 1rem;
+  border-radius: 20px;
+  border: 2px solid #dde;
+  background: white;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: var(--fuente);
+  color: var(--gris-texto);
+  transition: all 0.2s;
+}
+
+.grafica-tab:hover { border-color: var(--azul); color: var(--azul); }
+.grafica-tab.activo { font-weight: 700; }
+
+.periodo-tabs {
+  display: flex;
+  background: var(--gris-claro);
+  border-radius: 8px;
+  padding: 0.2rem;
+}
+
+.periodo-btn {
+  padding: 0.4rem 1rem;
+  border: none;
+  border-radius: 6px;
+  background: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: var(--fuente);
+  color: var(--gris-texto);
+  transition: all 0.2s;
+}
+
+.periodo-btn.activo {
+  background: var(--blanco);
+  color: var(--azul);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+
+.grafica-caja { width: 100%; }
+
+/* Historial */
+.historial-seccion {
+  background: var(--blanco);
+  border-radius: 14px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+.historial-titulo {
+  font-size: 1.1rem;
+  color: var(--azul);
+  margin-bottom: 1.2rem;
+}
+
+.historial-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.historial-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.9rem 1rem;
+  background: var(--gris-claro);
+  border-radius: 10px;
+  transition: background 0.2s;
+}
+
+.historial-item:hover   { background: #e8e8f0; }
+.historial-item.incompleto { opacity: 0.6; }
+
+.historial-estado { font-size: 1.3rem; min-width: 28px; }
+
+.historial-info   { flex: 1; }
+.historial-rutina { font-weight: 700; font-size: 0.95rem; color: var(--azul); }
+.historial-fecha  { font-size: 0.78rem; color: var(--gris-texto); margin-top: 0.2rem; }
+
+.historial-stats {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.82rem;
+  color: var(--gris-texto);
+}
+
+.historial-nivel {
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.2rem 0.6rem;
+  border-radius: 10px;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .progreso-resumen { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 600px) {
+  .progreso-main    { padding: 1rem; }
+  .progreso-resumen { grid-template-columns: repeat(2, 1fr); }
+  .historial-stats  { display: none; }
+  .graficas-header  { flex-direction: column; align-items: flex-start; }
+}
+
+.sin-entrenamientos {
+  text-align: center;
+  color: var(--gris-texto);
+  padding: 2rem;
+  font-size: 0.95rem;
+}
