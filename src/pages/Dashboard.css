@@ -402,3 +402,128 @@
 }
 
 .toggle.activo .toggle-circulo { left: 23px; }
+
+/* Modal plan */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  padding: 1rem;
+}
+
+.modal-caja {
+  background: var(--blanco);
+  border-radius: 16px;
+  padding: 2rem;
+  width: 100%;
+  max-width: 480px;
+  position: relative;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+  animation: modalEntrada 0.2s ease;
+}
+
+.modal-cerrar {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: var(--gris-claro);
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.modal-cerrar:hover { background: #ddd; }
+
+.modal-plan { max-width: 700px; }
+
+.modal-plan-titulo {
+  font-size: 1.4rem;
+  color: var(--azul);
+  margin-bottom: 0.3rem;
+}
+
+.modal-plan-subtitulo {
+  color: var(--gris-texto);
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+
+.planes-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.plan-card {
+  background: var(--gris-claro);
+  border-radius: 12px;
+  padding: 1.3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  transition: transform 0.2s;
+}
+
+.plan-card:hover { transform: translateY(-3px); }
+
+.plan-card.plan-actual {
+  box-shadow: 0 0 0 2px var(--naranja);
+}
+
+.plan-card h3 { font-size: 1rem; font-weight: 800; }
+
+.plan-precio { display: flex; align-items: baseline; gap: 0.2rem; }
+.plan-precio-num { font-size: 1.5rem; font-weight: 900; color: var(--azul); }
+.plan-precio-per { font-size: 0.8rem; color: var(--gris-texto); }
+
+.plan-features {
+  list-style: none;
+  font-size: 0.82rem;
+  color: var(--gris-texto);
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  flex: 1;
+}
+
+.plan-badge-actual {
+  background: var(--naranja);
+  color: white;
+  text-align: center;
+  padding: 0.5rem;
+  border-radius: 7px;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.btn-elegir-plan {
+  color: white;
+  border: none;
+  padding: 0.6rem;
+  border-radius: 7px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: var(--fuente);
+  transition: opacity 0.2s;
+}
+
+.btn-elegir-plan:hover    { opacity: 0.85; }
+.btn-elegir-plan:disabled { opacity: 0.5; cursor: not-allowed; }
+
+@media (max-width: 600px) {
+  .planes-grid { grid-template-columns: 1fr; }
+}

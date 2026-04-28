@@ -43,6 +43,7 @@ function Dashboard() {
   const [nuevoNombre, setNuevoNombre] = useState('');
   const [mensajeNombre, setMensajeNombre] = useState('');
   const [cargando, setCargando] = useState(false);
+  const [modalPlan, setModalPlan] = useState(false);
 
   const notifRef = useRef(null);
   const configRef = useRef(null);
@@ -96,6 +97,122 @@ function Dashboard() {
       setCargando(false);
     }
   };
+
+  const handleCambiarPlan = async (nuevoPlan) => {
+    setCargando(true);
+    setMensajeNombre('');
+
+    const usuarioActual = JSON.parse(localStorage.getItem('usuario'));
+    console.log('Usuario:', usuarioActual);
+    console.log('Nuevo plan:', nuevoPlan);
+
+    try {
+      const res = await fetch('http://localhost:8000/controllers/actualizar_plan.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: usuarioActual.id, plan: nuevoPlan }),
+      });
+
+      console.log('Status:', res.status);
+      const data = await res.json();
+      console.log('Respuesta:', data);
+
+      if (!res.ok) {
+        setMensajeNombre(data.error || 'Error al actualizar el plan.');
+      } else {
+        const actualizado = { ...usuarioActual, plan: nuevoPlan };
+        localStorage.setItem('usuario', JSON.stringify(actualizado));
+        setMensajeNombre('✅ Plan actualizado correctamente.');
+        setTimeout(() => {
+          setModalPlan(false);
+          setMensajeNombre('');
+          window.location.reload();
+        }, 1500);
+      }
+    } catch (err) {
+      console.error('Error:', err);
+      setMensajeNombre('No se pudo conectar con el servidor.');
+    } finally {
+      setCargando(false);
+    }
+  };
+
+  {/* Modal cambio de plan */}
+  {modalPlan && (
+    <div className="modal-overlay" onClick={() => setModalPlan(false)}>
+      <div className="modal-caja modal-plan" onClick={(e) => e.stopPropagation()}>
+        <button className="modal-cerrar" onClick={() => setModalPlan(false)}>✕</button>
+        <h2 className="modal-plan-titulo">Elige tu plan</h2>
+        <p className="modal-plan-subtitulo">Cambia o mejora tu suscripción en cualquier momento.</p>
+
+        <div className="planes-grid">
+          {[
+            {
+              key:         'gratuito',
+              nombre:      'Gratuito',
+              precio:      '0€',
+              periodo:     '',
+              color:       '#555',
+              features:    ['Rutinas básicas', 'Acceso limitado', 'Sin entrenador'],
+            },
+            {
+              key:         'premium',
+              nombre:      'Premium',
+              precio:      '9,99€',
+              periodo:     '/mes',
+              color:       '#f47c20',
+              features:    ['Rutinas personalizadas', 'Seguimiento de progreso', 'Dietas incluidas', 'Tienda'],
+            },
+            {
+              key:         'entrenador',
+              nombre:      'Con entrenador',
+              precio:      '29,99€',
+              periodo:     '/mes',
+              color:       '#1a3a5c',
+              features:    ['Todo lo de Premium', 'Entrenador personal', 'Plan 100% personalizado'],
+            },
+          ].map((plan) => {
+            const esPlanActual = usuario.plan === plan.key;
+            return (
+              <div
+                key={plan.key}
+                className={`plan-card ${esPlanActual ? 'plan-actual' : ''}`}
+                style={{ borderTop: `4px solid ${plan.color}` }}
+              >
+                <h3 style={{ color: plan.color }}>{plan.nombre}</h3>
+                <div className="plan-precio">
+                  <span className="plan-precio-num">{plan.precio}</span>
+                  <span className="plan-precio-per">{plan.periodo}</span>
+                </div>
+                <ul className="plan-features">
+                  {plan.features.map((f, i) => (
+                    <li key={i}>✓ {f}</li>
+                  ))}
+                </ul>
+                {esPlanActual ? (
+                  <span className="plan-badge-actual">Plan actual</span>
+                ) : (
+                  <button
+                    className="btn-elegir-plan"
+                    style={{ background: plan.color }}
+                    onClick={() => {
+                      console.log('Click en plan:', plan.key);
+                      handleCambiarPlan(plan.key);
+                    }}
+                    disabled={cargando}
+                  >
+                    {cargando ? 'Procesando...' : `Cambiar a ${plan.nombre}`}
+                  </button>
+                )}
+              </div>
+            );
+          })}
+        </div>
+
+        {mensajeNombre && <p className="config-mensaje" style={{ textAlign: 'center', marginTop: '1rem' }}>{mensajeNombre}</p>}
+      </div>
+    </div>
+  )}
 
   return (
     <div className="dashboard-layout">
@@ -165,6 +282,17 @@ function Dashboard() {
                 <div className="dropdown config-dropdown">
                   <div className="dropdown-header">
                     <span>Configuración</span>
+                  </div>
+
+                  {/* Cambiar plan */}
+                  <div className="config-item" style={{ borderBottom: 'none' }}>
+                    <span>⭐ Plan actual: <strong>{usuario.plan}</strong></span>
+                    <button
+                      className="btn-editar-nombre"
+                      onClick={() => { setModalPlan(true); setConfigAbierto(false); }}
+                    >
+                      Cambiar
+                    </button>
                   </div>
 
                   {/* Modo oscuro */}
@@ -277,8 +405,63 @@ function Dashboard() {
         </section>
 
       </main>
-    </div>
-  );
-}
+
+        {modalPlan && (
+          <div className="modal-overlay" onClick={() => setModalPlan(false)}>
+            <div className="modal-caja modal-plan" onClick={(e) => e.stopPropagation()}>
+              <button className="modal-cerrar" onClick={() => setModalPlan(false)}>✕</button>
+              <h2 className="modal-plan-titulo">Elige tu plan</h2>
+              <p className="modal-plan-subtitulo">Cambia o mejora tu suscripción en cualquier momento.</p>
+
+              <div className="planes-grid">
+                {[
+                  { key: 'gratuito',    nombre: 'Gratuito',        precio: '0€',     periodo: '',     color: '#555',     features: ['Rutinas básicas', 'Acceso limitado', 'Sin entrenador'] },
+                  { key: 'premium',     nombre: 'Premium',         precio: '9,99€',  periodo: '/mes', color: '#f47c20',  features: ['Rutinas personalizadas', 'Seguimiento de progreso', 'Dietas incluidas', 'Tienda'] },
+                  { key: 'entrenador',  nombre: 'Con entrenador',  precio: '29,99€', periodo: '/mes', color: '#1a3a5c',  features: ['Todo lo de Premium', 'Entrenador personal', 'Plan 100% personalizado'] },
+                ].map((plan) => {
+                  const esPlanActual = usuario.plan === plan.key;
+                  return (
+                    <div
+                      key={plan.key}
+                      className={`plan-card ${esPlanActual ? 'plan-actual' : ''}`}
+                      style={{ borderTop: `4px solid ${plan.color}` }}
+                    >
+                      <h3 style={{ color: plan.color }}>{plan.nombre}</h3>
+                      <div className="plan-precio">
+                        <span className="plan-precio-num">{plan.precio}</span>
+                        <span className="plan-precio-per">{plan.periodo}</span>
+                      </div>
+                      <ul className="plan-features">
+                        {plan.features.map((f, i) => <li key={i}>✓ {f}</li>)}
+                      </ul>
+                      {esPlanActual ? (
+                        <span className="plan-badge-actual">Plan actual</span>
+                      ) : (
+                        <button
+                          className="btn-elegir-plan"
+                          style={{ background: plan.color }}
+                          onClick={() => handleCambiarPlan(plan.key)}
+                          disabled={cargando}
+                        >
+                          {cargando ? 'Procesando...' : `Cambiar a ${plan.nombre}`}
+                        </button>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+
+              {mensajeNombre && (
+                <p className="config-mensaje" style={{ textAlign: 'center', marginTop: '1rem' }}>
+                  {mensajeNombre}
+                </p>
+              )}
+            </div>
+          </div>
+        )}
+
+      </div>
+    );
+  }
 
 export default Dashboard;
