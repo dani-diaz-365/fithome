@@ -1,5 +1,6 @@
 import './Hero.css';
-
+import logo from '../assets/Logo.png';
+ 
 function Hero() {
   return (
     <section className="hero">
@@ -12,10 +13,10 @@ function Hero() {
         </div>
       </div>
       <div className="hero-imagen">
-        <div className="hero-placeholder">💪</div>
+        <img src={logo} alt="FitHome Logo" className="hero-logo" />
       </div>
     </section>
   );
 }
-
+ 
 export default Hero;
